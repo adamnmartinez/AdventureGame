@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d54d7918b0374d040abdc8e710a0e696
+guid: 5e9788055c7891b44997d8e49fee40f0
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: background3_0
+      name: VAMP32_JUMP_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 960
-        height: 480
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -111,8 +111,71 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9e299671cb5706b43b240fdab1a0576a
-      internalID: -1893761099
+      spriteID: 618d4fb42d97f0542b08976329bb5a5d
+      internalID: 1696195460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VAMP32_JUMP_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fcb021b8e3ada8742a9018f7712c08e6
+      internalID: 1509225064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VAMP32_JUMP_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cec263d6aaf6e6d429197d769c5ea937
+      internalID: 384414613
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VAMP32_JUMP_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a8353e171239224f8816fb3066f897f
+      internalID: 140533288
       vertices: []
       indices: 
       edges: []
@@ -128,7 +191,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      background3_0: -1893761099
+      VAMP32_JUMP_0: 1696195460
+      VAMP32_JUMP_1: 1509225064
+      VAMP32_JUMP_2: 384414613
+      VAMP32_JUMP_3: 140533288
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

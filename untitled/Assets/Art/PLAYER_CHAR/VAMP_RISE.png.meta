@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d54d7918b0374d040abdc8e710a0e696
+guid: bb7694601c757c848bbde6b8d269ad4c
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: background3_0
+      name: VAMP_RISE_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 960
-        height: 480
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -111,8 +111,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9e299671cb5706b43b240fdab1a0576a
-      internalID: -1893761099
+      spriteID: 2b1ea5d694e6bcb42b8aae7ffaf6ac0a
+      internalID: 1548243582
       vertices: []
       indices: 
       edges: []
@@ -128,7 +128,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      background3_0: -1893761099
+      VAMP_RISE_0: 1548243582
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

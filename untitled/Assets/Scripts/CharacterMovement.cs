@@ -1,32 +1,63 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class CharacterMovement : MonoBehaviour
 {
-    public Rigidbody2D rb;
-    public Animator animator;
-    public ContactFilter2D castFilter;
+    // COMPONENTS
+    Rigidbody2D rb;
+    Animator animator;
+    ContactFilter2D castFilter;
+    BoxCollider2D bc;
 
+    // BASIC MOVEMENT
     public float moveSpeed = 4;
     public float jumpSpeed = 3;
-
-    public float timeAir = -1;
-
+    public float lateralJumpSpeed = 4;
+    public float wallSpeed = 5;
     public bool canMove = true;
 
+    public bool jumpOnCooldown = false;
+    public float jumpCooldown = 1f;
+    public float wallJumpTime = 0.5f;
+
+    // DASH
+    public float dashImpulse = 25f;
+    public bool dashOnCooldown = false;
+    public float dashCooldown = 2f;
+    
+    public Vector2 dashStartPos = new Vector2(0, 0);
+    public float dashRange = 5f;
+    public float dashTime = 2f;
+    
+
+    // AIRTIME AND LANDING
+    private float timeAir = -1;
+    public float landTimer = 2.5f;
+
+    // RAYCAST
     public float wallDistance = 0.02f;
-
     public float groundDistance = 0.05f;
-
-    //Raycast for wall stuff
     RaycastHit2D[] wallHits = new RaycastHit2D[5];
     RaycastHit2D[] groundHits = new RaycastHit2D[5];
     private Vector2 wallCheckDirection => gameObject.transform.localScale.x > 0 ? Vector2.right : Vector2.left;
 
-    BoxCollider2D bc;
+
+    private bool _isDashing = false;
+    public bool isDashing {
+        set
+        {
+            animator.SetBool("isDashing", value);
+            bc.isTrigger = value;
+            _isDashing = value;
+        }
+        
+        get
+        {
+            return _isDashing;
+        }
+    }
 
     private bool _isAirborne = false;
     public bool isAirborne {
@@ -93,6 +124,7 @@ public class CharacterMovement : MonoBehaviour
         set
         {
             animator.SetBool("isWalled", value);
+            rb.gravityScale = value ? 0 : 1;
             _isWalled = value;
         }
 
@@ -124,6 +156,27 @@ public class CharacterMovement : MonoBehaviour
         canMove = true;
     }
 
+    public IEnumerator StartDashCooldown()
+    {
+        dashOnCooldown = true;
+        yield return new WaitForSeconds(dashCooldown);
+        dashOnCooldown = false;
+    }
+
+    public IEnumerator StartJumpCooldown()
+    {
+        jumpOnCooldown = true;
+        yield return new WaitForSeconds(jumpCooldown);
+        jumpOnCooldown = false;
+    }
+
+    public IEnumerator StartDash()
+    {
+        isDashing = true;
+        yield return new WaitForSeconds(dashTime);
+        isDashing = false;
+    }
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -135,9 +188,54 @@ public class CharacterMovement : MonoBehaviour
     {
         // Basic Movement
         float moveInput = Input.GetAxisRaw("Horizontal");
-        if (canMove)
+        float horizontalMoveInput = Input.GetAxisRaw("Vertical");
+        bool wantsToMove = Input.GetAxis("Horizontal") != 0;
+        bool wantsToDash = Input.GetKey(KeyCode.LeftShift);
+        bool wantsToJump = Input.GetKey(KeyCode.Space);
+
+        if (canMove && !wantsToDash && !wantsToJump || canMove && wantsToDash && dashOnCooldown && !isDashing) 
         {
-            rb.velocity = new Vector2(moveSpeed * moveInput, rb.velocity.y);
+            if(wantsToMove) 
+            { 
+                rb.velocity = new Vector2(moveSpeed * moveInput, rb.velocity.y);
+            }
+            else if (isWalled) 
+            {
+                rb.velocity = new Vector2(0, horizontalMoveInput < 0 ? horizontalMoveInput * wallSpeed : 0);
+            }
+        }
+        else if (canMove && wantsToDash && !dashOnCooldown && !isDashing)
+        {
+            StartCoroutine(StopMovementForSeconds(dashTime));
+            StartCoroutine(StartDashCooldown());
+            StartCoroutine(StartDash());
+            dashStartPos = new Vector2(gameObject.transform.localPosition.x, gameObject.transform.localPosition.y);
+
+        } 
+        else if (wantsToJump && !isAirborne && canMove && !isWalled && !isDashing && !jumpOnCooldown)
+        {
+            animator.SetTrigger("Jump");
+            StartCoroutine(StartJumpCooldown());
+            rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
+        } 
+        else if (wantsToJump && isWalled && canMove && !isDashing && isAirborne) 
+        {   
+            rb.velocity = new Vector2(lateralJumpSpeed * -wallCheckDirection.x, jumpSpeed);
+            if (wallCheckDirection.x > 0) facingLeft = true; else facingLeft = false;
+            StartCoroutine(StopMovementForSeconds(0.5f));
+        }
+        else if (isDashing)
+        {
+            // We want to end the dash early if we reach the maximum dash range or we hit a wall.
+            if (Math.Abs(dashStartPos.x - gameObject.transform.localPosition.x) >= dashRange)
+            {
+                rb.velocity = new Vector2(0, 0);
+                isDashing = false;
+                canMove = true;
+            } else {
+                 rb.velocity = new Vector2(dashImpulse * wallCheckDirection.x, 0);
+            }
+           
         }
         
         // On landing from a fall, check to use land animation or not.
@@ -145,16 +243,13 @@ public class CharacterMovement : MonoBehaviour
         {
             // AIRBORNE
             timeAir = Time.time;
-            Debug.Log("Airborne Started");
         }
-        else if (isAirborne && bc.Cast(Vector2.down, castFilter, groundHits, groundDistance) > 0)
+        else if (isAirborne && bc.Cast(Vector2.down, castFilter, groundHits, groundDistance) > 0 && !isWalled)
         {
             // LAND
-            Debug.Log("Airborne Ended");
-            Debug.Log("Time Airborne: " + (Time.time - timeAir).ToString());
 
-            // If airborne for more than 2 seconds, play landing animation and halt movement for a little bit.
-            if (Time.time - timeAir > 2.0) 
+            // If airborne for more than landTimer seconds, play landing animation and halt movement for a little bit.
+            if (Time.time - timeAir > landTimer) 
             {
                 animator.SetTrigger("Land");
                 rb.velocity *= new Vector2(0, 1);
@@ -171,14 +266,8 @@ public class CharacterMovement : MonoBehaviour
 
         // Set bools with character velocity
         isAirborne = bc.Cast(Vector2.down, castFilter, groundHits, groundDistance) == 0;
-        isRising = rb.velocity.y > 0;
+        isRising = rb.velocity.y > 0;        
 
-        // Jump
-        if (Input.GetKey(KeyCode.Space) && !isAirborne && canMove)
-        {
-            animator.SetTrigger("Jump");
-            rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
-        }
 
         // Set isMoving Bool
         if (moveInput != 0)
