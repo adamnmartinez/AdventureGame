@@ -111,8 +111,155 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e580937165ac65e419b20ed9b83445a5
-      internalID: 1076733894
+      spriteID: 032eae7c1053bb54f98896fa2bb4c519
+      internalID: 1221772424
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VAMP_WALLCLUTCH_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67d0c2261e991fb4688337918634bc7e
+      internalID: -1996884359
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VAMP_WALLCLUTCH_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9eee49182db80a43b1b867c265e7c30
+      internalID: 1080816180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VAMP_WALLCLUTCH_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a2f569a5fd6b3a419ff825b74e8b02f
+      internalID: -1139804945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VAMP_WALLCLUTCH_4
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b7b93e4c8db25a42bba680742662100
+      internalID: 2115450925
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VAMP_WALLCLUTCH_5
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a783ce762364f44da94ab961fc67a1a
+      internalID: -113225909
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VAMP_WALLCLUTCH_6
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc50acfa8f56fe24da47832151c223b4
+      internalID: -1976733648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VAMP_WALLCLUTCH_7
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c200cbb3e34b7be429fbd89497cca12e
+      internalID: -1020976495
       vertices: []
       indices: 
       edges: []
@@ -128,7 +275,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      VAMP_WALLCLUTCH_0: 1076733894
+      VAMP_WALLCLUTCH_0: 1221772424
+      VAMP_WALLCLUTCH_1: -1996884359
+      VAMP_WALLCLUTCH_2: 1080816180
+      VAMP_WALLCLUTCH_3: -1139804945
+      VAMP_WALLCLUTCH_4: 2115450925
+      VAMP_WALLCLUTCH_5: -113225909
+      VAMP_WALLCLUTCH_6: -1976733648
+      VAMP_WALLCLUTCH_7: -1020976495
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

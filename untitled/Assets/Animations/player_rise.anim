@@ -21,7 +21,21 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 1548243582, guid: bb7694601c757c848bbde6b8d269ad4c, type: 3}
+      value: {fileID: -1706634245, guid: bb7694601c757c848bbde6b8d269ad4c, type: 3}
+    - time: 0.15
+      value: {fileID: 1361954205, guid: bb7694601c757c848bbde6b8d269ad4c, type: 3}
+    - time: 0.28333333
+      value: {fileID: -1166030345, guid: bb7694601c757c848bbde6b8d269ad4c, type: 3}
+    - time: 0.43333334
+      value: {fileID: -1501523509, guid: bb7694601c757c848bbde6b8d269ad4c, type: 3}
+    - time: 0.56666666
+      value: {fileID: 371104530, guid: bb7694601c757c848bbde6b8d269ad4c, type: 3}
+    - time: 0.71666664
+      value: {fileID: 1423294813, guid: bb7694601c757c848bbde6b8d269ad4c, type: 3}
+    - time: 0.85
+      value: {fileID: -901011047, guid: bb7694601c757c848bbde6b8d269ad4c, type: 3}
+    - time: 1
+      value: {fileID: 440374688, guid: bb7694601c757c848bbde6b8d269ad4c, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -44,13 +58,20 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: 1548243582, guid: bb7694601c757c848bbde6b8d269ad4c, type: 3}
+    - {fileID: -1706634245, guid: bb7694601c757c848bbde6b8d269ad4c, type: 3}
+    - {fileID: 1361954205, guid: bb7694601c757c848bbde6b8d269ad4c, type: 3}
+    - {fileID: -1166030345, guid: bb7694601c757c848bbde6b8d269ad4c, type: 3}
+    - {fileID: -1501523509, guid: bb7694601c757c848bbde6b8d269ad4c, type: 3}
+    - {fileID: 371104530, guid: bb7694601c757c848bbde6b8d269ad4c, type: 3}
+    - {fileID: 1423294813, guid: bb7694601c757c848bbde6b8d269ad4c, type: 3}
+    - {fileID: -901011047, guid: bb7694601c757c848bbde6b8d269ad4c, type: 3}
+    - {fileID: 440374688, guid: bb7694601c757c848bbde6b8d269ad4c, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.016666668
+    m_StopTime: 1.0166667
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0

@@ -11,6 +11,8 @@ public class CharacterMovement : MonoBehaviour
     ContactFilter2D castFilter;
     BoxCollider2D bc;
 
+    public BoxCollider2D fd;
+
     // BASIC MOVEMENT
     public float moveSpeed = 4;
     public float jumpSpeed = 3;
@@ -26,19 +28,22 @@ public class CharacterMovement : MonoBehaviour
     public float dashImpulse = 25f;
     public bool dashOnCooldown = false;
     public float dashCooldown = 2f;
-    
+    public Vector2 dashDirection = Vector2.left;
+
     public Vector2 dashStartPos = new Vector2(0, 0);
     public float dashRange = 5f;
     public float dashTime = 2f;
     
 
     // AIRTIME AND LANDING
-    private float timeAir = -1;
-    public float landTimer = 2.5f;
+    public float timeAir = -1;
+    public float totalTimeAirborne = -1;
+    public float landTimer = 1f;
 
     // RAYCAST
-    public float wallDistance = 0.02f;
-    public float groundDistance = 0.05f;
+    public float wallDistance = 0.75f;
+    public float wallBoxCastDistance = 0.02f;
+    public float groundDistance = 3f;
     RaycastHit2D[] wallHits = new RaycastHit2D[5];
     RaycastHit2D[] groundHits = new RaycastHit2D[5];
     private Vector2 wallCheckDirection => gameObject.transform.localScale.x > 0 ? Vector2.right : Vector2.left;
@@ -64,6 +69,33 @@ public class CharacterMovement : MonoBehaviour
         set
         {
             animator.SetBool("isAirborne", value);
+
+            if (isAirborne != value)
+            {
+                if (value == true)
+                {
+                    // Entering Airborne State
+                    timeAir = Time.time;
+                } 
+                else 
+                {
+                    // Exiting Airborne State
+
+                    // Perform additional wall check to verify landing is valid
+                    totalTimeAirborne = Time.time - timeAir;
+                    Debug.Log(totalTimeAirborne);
+                    if(totalTimeAirborne >= landTimer)
+                    {
+                        if (!isWalled) 
+                        {
+                            animator.SetTrigger("Land");
+                            rb.velocity *= new Vector2(0, 1);
+                            StartCoroutine(StopMovementForSeconds(GetAnimationClip("player_land").length - 0.2f));
+                        }
+                    }
+                }   
+            }
+
             _isAirborne = value;
         }
 
@@ -125,7 +157,12 @@ public class CharacterMovement : MonoBehaviour
         {
             animator.SetBool("isWalled", value);
             rb.gravityScale = value ? 0 : 1;
-            _isWalled = value;
+            if (_isWalled != value)
+            {
+                if (value) rb.velocity *= new Vector2(1, 0);
+                 _isWalled = value;
+            }
+            if (value) timeAir = Time.time;
         }
 
         get
@@ -190,104 +227,93 @@ public class CharacterMovement : MonoBehaviour
         float moveInput = Input.GetAxisRaw("Horizontal");
         float horizontalMoveInput = Input.GetAxisRaw("Vertical");
         bool wantsToMove = Input.GetAxis("Horizontal") != 0;
-        bool wantsToDash = Input.GetKey(KeyCode.LeftShift);
-        bool wantsToJump = Input.GetKey(KeyCode.Space);
+        bool wantsToDash = Input.GetKeyDown(KeyCode.LeftShift);
+        bool wantsToJump = Input.GetKeyDown(KeyCode.Space);
 
+        // Movement Types
         if (canMove && !wantsToDash && !wantsToJump || canMove && wantsToDash && dashOnCooldown && !isDashing) 
         {
+            // Basic Movement controlled by player input
             if(wantsToMove) 
             { 
+                // Normal Move
+
+                if (bc.Cast(wallCheckDirection, wallHits, wallBoxCastDistance) > 0){
+                    // Special box cast to determine if next to a wall, but not low enought to qualify as walled
+                    if(moveInput > 0 && wallCheckDirection.x > 0 || moveInput < 0 && wallCheckDirection.x < 0)
+                    {
+                        // Don't allow player to move into wall to suspend themself
+                        moveInput = 0;
+                    }
+                }
+
                 rb.velocity = new Vector2(moveSpeed * moveInput, rb.velocity.y);
             }
             else if (isWalled) 
             {
+                // Downward Wall Slide
                 rb.velocity = new Vector2(0, horizontalMoveInput < 0 ? horizontalMoveInput * wallSpeed : 0);
             }
         }
         else if (canMove && wantsToDash && !dashOnCooldown && !isDashing)
         {
+            // Start Dash
             StartCoroutine(StopMovementForSeconds(dashTime));
             StartCoroutine(StartDashCooldown());
             StartCoroutine(StartDash());
+            dashDirection = wallCheckDirection;
             dashStartPos = new Vector2(gameObject.transform.localPosition.x, gameObject.transform.localPosition.y);
 
         } 
-        else if (wantsToJump && !isAirborne && canMove && !isWalled && !isDashing && !jumpOnCooldown)
+        else if (wantsToJump && !isAirborne && canMove && !isDashing && !jumpOnCooldown)
         {
+            // Jump
             animator.SetTrigger("Jump");
             StartCoroutine(StartJumpCooldown());
             rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
         } 
         else if (wantsToJump && isWalled && canMove && !isDashing && isAirborne) 
         {   
+            // Wall Jump
             rb.velocity = new Vector2(lateralJumpSpeed * -wallCheckDirection.x, jumpSpeed);
             if (wallCheckDirection.x > 0) facingLeft = true; else facingLeft = false;
             StartCoroutine(StopMovementForSeconds(0.5f));
         }
         else if (isDashing)
         {
-            // We want to end the dash early if we reach the maximum dash range or we hit a wall.
+            // During Dash, move at dashImpulse velocity until dash range is reached
             if (Math.Abs(dashStartPos.x - gameObject.transform.localPosition.x) >= dashRange)
             {
                 rb.velocity = new Vector2(0, 0);
                 isDashing = false;
                 canMove = true;
             } else {
-                 rb.velocity = new Vector2(dashImpulse * wallCheckDirection.x, 0);
+                 rb.velocity = new Vector2(dashImpulse * dashDirection.x, 0);
             }
            
+        }    
+
+        // Is Moving / Facing Direction Check
+        if(canMove)
+        {
+            if (moveInput != 0)
+            {
+                isMoving = true;
+                // Only check for facing direction on player move
+                facingLeft = moveInput < 0;
+            } 
+            else 
+            {
+                isMoving = false;
+            }
         }
         
-        // On landing from a fall, check to use land animation or not.
-        if (!isAirborne && bc.Cast(Vector2.down, castFilter, groundHits, groundDistance) == 0)
-        {
-            // AIRBORNE
-            timeAir = Time.time;
-        }
-        else if (isAirborne && bc.Cast(Vector2.down, castFilter, groundHits, groundDistance) > 0 && !isWalled)
-        {
-            // LAND
-
-            // If airborne for more than landTimer seconds, play landing animation and halt movement for a little bit.
-            if (Time.time - timeAir > landTimer) 
-            {
-                animator.SetTrigger("Land");
-                rb.velocity *= new Vector2(0, 1);
-                StartCoroutine(StopMovementForSeconds(GetAnimationClip("player_land").length - 0.2f));
-            }
-
-            timeAir = -1;
-        }
-        else if (isWalled)
-        {
-            // Reset "land timer" while player is walled.
-            timeAir = Time.time;
-        }
-
-        // Set bools with character velocity
-        isAirborne = bc.Cast(Vector2.down, castFilter, groundHits, groundDistance) == 0;
-        isRising = rb.velocity.y > 0;        
-
-
-        // Set isMoving Bool
-        if (moveInput != 0)
-        {
-            isMoving = true;
-            if (moveInput < 0)
-            {
-                facingLeft = true;
-            } else {
-                facingLeft = false;
-            }
-        } 
-        else 
-        {
-            isMoving = false;
-        }
     }
 
     void FixedUpdate()
     {
-        isWalled = bc.Cast(wallCheckDirection, castFilter, wallHits, wallDistance) > 0;
+        isAirborne = fd.Cast(Vector2.down, castFilter, groundHits, groundDistance, true) == 0;
+        isWalled = fd.Cast(wallCheckDirection, castFilter, wallHits, wallDistance, true) > 0;
+        isRising = rb.velocity.y > 0;
     }
 }

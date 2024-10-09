@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 3e86c01ef3a8a374a9c028ea7c103a09
+guid: 9847b5958c501b3458809a748d7ba082
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,7 +97,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: VAMP_FALL_0
+      name: VAMP_LAND_0
       rect:
         serializedVersion: 2
         x: 0
@@ -111,14 +111,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5f73603564ff2064485928248f31e00e
-      internalID: -198436741
+      spriteID: b89a6168474e08f45b31daf0499cfdd7
+      internalID: 288978326
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: VAMP_FALL_1
+      name: VAMP_LAND_1
       rect:
         serializedVersion: 2
         x: 32
@@ -132,14 +132,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 725a25822b1e2f64f97dd59083710f42
-      internalID: 2146570778
+      spriteID: 7102f8657a7e83f49aeeb2cff48a6210
+      internalID: 1212289662
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: VAMP_FALL_2
+      name: VAMP_LAND_2
       rect:
         serializedVersion: 2
         x: 64
@@ -153,14 +153,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1cdcd01f48b6d5746acd96a3347cd614
-      internalID: -1158783948
+      spriteID: 94e259d642aa78c49956f080e4444d63
+      internalID: -32441926
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: VAMP_FALL_3
+      name: VAMP_LAND_3
       rect:
         serializedVersion: 2
         x: 96
@@ -174,14 +174,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 011f053c4a7ba5f46be0b7ef37b916ba
-      internalID: 262987097
+      spriteID: d91dcca9d72af184f8b04c1a13e712c7
+      internalID: -1229947186
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: VAMP_FALL_4
+      name: VAMP_LAND_4
       rect:
         serializedVersion: 2
         x: 128
@@ -195,14 +195,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4a68eabca0324324aa9d66c6833e8475
-      internalID: 573035332
+      spriteID: 37944815fb1a93347bd9374934934f63
+      internalID: 2058368432
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: VAMP_FALL_5
+      name: VAMP_LAND_5
       rect:
         serializedVersion: 2
         x: 160
@@ -216,14 +216,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8143ddf593ec9f64ca23858e7fc70f84
-      internalID: 429602266
+      spriteID: 6d94f94e110366b418846aec57b25a78
+      internalID: 1640646127
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: VAMP_FALL_6
+      name: VAMP_LAND_6
       rect:
         serializedVersion: 2
         x: 192
@@ -237,29 +237,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cf1addfb0768f614594aac2794547c0f
-      internalID: -1095724148
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: VAMP_FALL_7
-      rect:
-        serializedVersion: 2
-        x: 224
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6e4be08dc1818904590b0ac1f690847f
-      internalID: 554152956
+      spriteID: cec3b528e7ffa544fb073f57b5a91dca
+      internalID: 930082362
       vertices: []
       indices: 
       edges: []
@@ -275,14 +254,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      VAMP_FALL_0: -198436741
-      VAMP_FALL_1: 2146570778
-      VAMP_FALL_2: -1158783948
-      VAMP_FALL_3: 262987097
-      VAMP_FALL_4: 573035332
-      VAMP_FALL_5: 429602266
-      VAMP_FALL_6: -1095724148
-      VAMP_FALL_7: 554152956
+      VAMP_LAND_0: 288978326
+      VAMP_LAND_1: 1212289662
+      VAMP_LAND_2: -32441926
+      VAMP_LAND_3: -1229947186
+      VAMP_LAND_4: 2058368432
+      VAMP_LAND_5: 1640646127
+      VAMP_LAND_6: 930082362
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
